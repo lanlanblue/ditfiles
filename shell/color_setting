@@ -1,0 +1,157 @@
+#!/bin/sh
+
+# See the Solarized homepage for details:
+# http://ethanschoonover.com/solarized
+
+                   # SOLARIZED HEX     16/8 TERMCOL   L*A*B     
+                   # --------- ------- ---- --------- ----------
+ base03="00/2b/36"  # base03    #002b36  8/4 brblack   15 -12 -12
+ base02="07/36/42"  # base02    #073642  0/4 black     20 -12 -12
+ base01="58/6e/75"  # base01    #586e75 10/7 brgreen   45 -07 -07
+ base00="65/7b/83"  # base00    #657b83 11/7 bryellow  50 -07 -07
+  base0="83/94/96"  # base0     #839496 12/6 brblue    60 -06 -03
+  base1="93/a1/a1"  # base1     #93a1a1 14/4 brcyan    65 -05 -02
+  base2="ee/e8/d5"  # base2     #eee8d5  7/7 white     92 -00  10
+  base3="fd/f6/e3"  # base3     #fdf6e3 15/7 brwhite   97  00  10
+ yellow="b5/89/00"  # yellow    #b58900  3/3 yellow    60  10  65
+ orange="cb/4b/16"  # orange    #cb4b16  9/3 brred     50  50  55
+    red="dc/32/2f"  # red       #dc322f  1/1 red       50  65  45
+magenta="d3/36/82"  # magenta   #d33682  5/5 magenta   50  65 -05
+ violet="6c/71/c4"  # violet    #6c71c4 13/5 brmagenta 50  15 -45
+   blue="26/8b/d2"  # blue      #268bd2  4/4 blue      55 -10 -45
+   cyan="2a/a1/98"  # cyan      #2aa198  6/6 cyan      60 -35 -05
+  green="85/99/00"  # green     #859900  2/2 green     60 -20  65
+
+### OCEANIC NEXT
+ base03="1B/2B/34"  # base03    #002b36  8/4 brblack   15 -12 -12
+ base02="34/3D/46"  # base02    #073642  0/4 black     20 -12 -12
+ base01="4F/5B/66"  # base01    #586e75 10/7 brgreen   45 -07 -07
+ base00="65/73/7E"  # base00    #657b83 11/7 bryellow  50 -07 -07
+  base0="A7/AD/BA"  # base0     #839496 12/6 brblue    60 -06 -03
+  base1="C0/C5/CE"  # base1     #93a1a1 14/4 brcyan    65 -05 -02
+  base2="CD/D3/DE"  # base2     #eee8d5  7/7 white     92 -00  10
+  base3="D8/DE/E9"  # base3     #fdf6e3 15/7 brwhite   97  00  10
+ yellow="FA/C8/63"  # yellow    #b58900  3/3 yellow    60  10  65
+ orange="F9/91/57"  # orange    #cb4b16  9/3 brred     50  50  55
+    red="EC/5F/67"  # red       #dc322f  1/1 red       50  65  45
+magenta="C5/94/C5"  # magenta   #d33682  5/5 magenta   50  65 -05
+ violet="AB/79/67"  # violet    #6c71c4 13/5 brmagenta 50  15 -45
+   blue="66/99/CC"  # blue      #268bd2  4/4 blue      55 -10 -45
+   cyan="5F/B3/B3"  # cyan      #2aa198  6/6 cyan      60 -35 -05
+  green="99/C7/94"  # green     #859900  2/2 green     60 -20  65
+
+ESC="\033"
+ST="${ESC}\\"
+OSC="${ESC}]"
+
+send_osc() {
+  Ps=$1
+  Pt=$2
+  printf "${OSC}${Ps};${Pt}${ST}"
+}
+
+change_text_color() {
+  send_osc 4 "$1;rgb:$2"
+}
+
+change_foreground_color() {
+  send_osc 10 "rgb:$1"
+}
+
+change_background_color() {
+  send_osc 11 "rgb:$1"
+}
+
+change_cursor_color() {
+  send_osc 12 "rgb:$1"
+}
+
+change_mouse_foreground_color() {
+  send_osc 13 "rgb:$1"
+}
+
+change_mouse_background_color() {
+  send_osc 14 "rgb:$1"
+}
+
+change_highlight_foreground_color() {
+  send_osc 19 "rgb:$1"
+}
+
+change_highlight_background_color() {
+  send_osc 17 "rgb:$1"
+}
+
+change_border_color() {
+  send_osc 708 "rgb:$1"
+}
+
+remove_slashes() {
+  printf "${1//\//}"  
+}
+
+iterm_change_cursor_color() {
+  printf "${OSC}Pl$(remove_slashes $1)${ST}"
+}
+
+iterm_change_cursor_text_color() {
+  printf "${OSC}Pm$(remove_slashes $1)${ST}"
+}
+
+iterm_change_selection_foreground_color() {
+  printf "${OSC}Pk$(remove_slashes $1)${ST}"
+}
+
+iterm_change_selection_background_color() {
+  printf "${OSC}Pj$(remove_slashes $1)${ST}"
+}
+
+change_text_color 0  $base02
+change_text_color 1  $red
+change_text_color 2  $green
+change_text_color 3  $yellow
+change_text_color 4  $blue
+change_text_color 5  $magenta
+change_text_color 6  $cyan
+change_text_color 7  $base2
+change_text_color 8  $base03
+change_text_color 9  $orange
+change_text_color 10 $base01
+change_text_color 11 $base00
+change_text_color 12 $base0
+change_text_color 13 $violet
+change_text_color 14 $base1
+change_text_color 15 $base3
+
+foreground="$base0"
+background="$base03"
+cursor="$base1"
+cursor_text="$base02"
+mouse_foreground="$base1"
+mouse_background="$base02"
+highlight_background="$base02"
+border="$base03"
+
+# foreground/backgounrd
+change_foreground_color $base0
+change_background_color $base03
+
+# cursor
+change_cursor_color $base1 # iterm ignores this
+if [ -n "$ITERM_PROFILE" ]; then
+  iterm_change_cursor_color $base1
+  iterm_change_cursor_text_color $base02
+fi
+
+# selection
+change_highlight_background_color $base02 # iterm ignores this
+if [ -n "$ITERM_PROFILE" ]; then
+  iterm_change_selection_foreground_color $base1
+  iterm_change_selection_background_color $base02
+fi
+
+# additional
+change_mouse_foreground_color $base1 # iterm ignores this
+change_mouse_background_color $base02 # iterm ignores this
+change_border_color $border # urxvt uses this
+

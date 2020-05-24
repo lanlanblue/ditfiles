@@ -1,0 +1,79 @@
+syntax on
+set nocompatible
+set backspace=2
+set clipboard=unnamed,unnamedplus
+set nu
+set autoindent
+set smartindent
+set smarttab
+" set cursorline
+set tabstop=8
+set expandtab
+set softtabstop=8
+set shiftwidth=8
+set mouse=a
+set hlsearch
+set incsearch
+set ruler
+set list
+set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+inoremap ( ()<Esc>i
+inoremap " ""<Esc>i
+inoremap ' ''<Esc>i
+inoremap [ []<Esc>i
+""inoremap < <><Esc>i
+inoremap {<CR> {<CR>}<Esc>ko
+inoremap {{ {}<ESC>i
+
+" Change insert mode cursor shape
+let &t_SI = "\e[5 q"
+let &t_EI = "\e[2 q"
+
+" Put autocmd in a group
+augroup vimrc
+  autocmd!
+
+  " Remember the last position
+  autocmd BufReadPost *
+        \ if line("'\"") > 1 && line("'\"") <= line("$") |
+        \   exe "normal! g`\"" |
+        \ endif
+
+  " Prevent Vim from clearing clipboard on exit
+  autocmd VimLeave * call system('echo ' . shellescape(getreg('+')) .
+            \ ' | xclip -selection clipboard')
+
+  autocmd FileType vim setlocal expandtab
+  autocmd FileType vim setlocal shiftwidth=2
+  autocmd FileType vim setlocal softtabstop=2
+  autocmd FileType vim setlocal tabstop=8
+
+  autocmd FileType cpp setlocal expandtab
+  autocmd FileType cpp setlocal shiftwidth=4
+  autocmd FileType cpp setlocal softtabstop=4
+  autocmd FileType cpp setlocal tabstop=8
+  autocmd FileType cpp setlocal cinoptions=b0,l1,g0,N-s,t0,i4,+4,(0,w1,W4
+  autocmd FileType cpp setlocal textwidth=80
+  autocmd FileType cpp setlocal errorformat=%f:%l:%c:\ %t%s:\ %m
+
+  autocmd FileType html setlocal expandtab
+  autocmd FileType html setlocal shiftwidth=2
+  autocmd FileType html setlocal softtabstop=2
+  autocmd FileType html setlocal tabstop=8
+
+  autocmd FileType javascript setlocal expandtab
+  autocmd FileType javascript setlocal shiftwidth=2
+  autocmd FileType javascript setlocal softtabstop=2
+  autocmd FileType javascript setlocal tabstop=8
+augroup end
+
+  autocmd QuickFixCmdPost [^l]* nested cwindow
+  autocmd QuickFixCmdPost    l* nested lwindow
+
+" Load plugins
+if filereadable(expand("~/.vimrc.plugins"))
+  source ~/.vimrc.plugins
+endif
+
+set report=99999
+set shortmess=astWAIc

@@ -1,0 +1,15 @@
+# shell tools
+brew "tmux"
+cask "iterm2"
+
+# vim tools
+brew "vim"
+
+# file management tools
+brew "unrar"
+brew "git"
+
+# languages
+brew "gcc"
+brew "gdb"
+brew "node"
