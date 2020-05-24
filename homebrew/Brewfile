@@ -4,6 +4,7 @@ cask "iterm2"
 
 # vim tools
 brew "vim"
+cask "visual-studio-code"
 
 # file management tools
 brew "unrar"
